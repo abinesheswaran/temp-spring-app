@@ -1,14 +1,15 @@
 package com.test.my_spring_app.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "employee")
@@ -22,8 +23,9 @@ public class Employee {
     private int age;
     @Column(name = "salary")
     private double salary;
-    @Column(name="vehicle_id")
-    private int vehicleId;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "vehicle_id", referencedColumnName = "id")
+    private Vehicle vehicle;
     @Column(name="team_id")
     private int teamId;
     @Column(name="role_id")
@@ -32,11 +34,11 @@ public class Employee {
     public Employee() {
     }
 
-    public Employee(String name, int age, double salary, int vehicleId, int teamId, int roleId) {
+    public Employee(String name, int age, double salary, Vehicle vehicle, int teamId, int roleId) {
         this.name = name;
         this.age = age;
         this.salary = salary;
-        this.vehicleId = vehicleId;
+        this.vehicle = vehicle;
         this.teamId = teamId;
         this.roleId = roleId;
     }
@@ -73,12 +75,12 @@ public class Employee {
         this.salary = salary;
     }
 
-    public int getVehicleId() {
-        return vehicleId;
+    public Vehicle getVehicle() {
+        return vehicle;
     }
 
-    public void setVehicleId(int vehicleId) {
-        this.vehicleId = vehicleId;
+    public void setVehicle(Vehicle vehicle) {
+        this.vehicle = vehicle;
     }
 
     public int getTeamId() {

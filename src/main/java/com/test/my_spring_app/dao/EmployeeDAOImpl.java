@@ -1,6 +1,7 @@
 package com.test.my_spring_app.dao;
 
 import com.test.my_spring_app.entity.Employee;
+import com.test.my_spring_app.entity.Vehicle;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
@@ -36,19 +37,25 @@ public class EmployeeDAOImpl implements EmployeeDAO {
     @Override
     @Transactional
     public void update(Employee employee, int id) {
-        Employee emp = em.find(Employee.class, id);
-        emp.setName(employee.getName());
-        emp.setSalary(employee.getSalary());
-        emp.setAge(employee.getAge());
-        emp.setRoleId(employee.getRoleId());
-        emp.setTeamId(employee.getTeamId());
-        emp.setVehicleId(employee.getVehicleId());
-        em.merge(employee);
+        Employee theEmployee = em.find(Employee.class, id);
+        Vehicle theVehicle = theEmployee.getVehicle();
+        theEmployee.setName(employee.getName());
+        theEmployee.setSalary(employee.getSalary());
+        theEmployee.setAge(employee.getAge());
+        theEmployee.setRoleId(employee.getRoleId());
+        theEmployee.setTeamId(employee.getTeamId());
+        theVehicle.setMake(employee.getVehicle().getMake());
+        theVehicle.setModel(employee.getVehicle().getModel());
+        theVehicle.setYear(employee.getVehicle().getYear());
+        theVehicle.setColor(employee.getVehicle().getColor());
+        theEmployee.setVehicle(theVehicle);
+        em.merge(theEmployee);
     }
 
     @Override
     @Transactional
     public void delete(int id) {
-        em.remove(em.find(Employee.class, id));
+        Employee employee = em.find(Employee.class, id);
+        em.remove(employee);
     }
 }

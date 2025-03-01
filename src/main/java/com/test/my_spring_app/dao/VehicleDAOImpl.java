@@ -31,14 +31,15 @@ public class VehicleDAOImpl implements VehicleDAO {
         theVehicle.setModel(vehicle.getModel());
         theVehicle.setYear(vehicle.getYear());
         theVehicle.setMake(vehicle.getMake());
-        theVehicle.setEmployeeId(vehicle.getEmployeeId());
         em.merge(theVehicle);
     }
 
     @Override
     @Transactional
     public void delete(int id) {
-        em.remove(em.find(Vehicle.class, id));
+        // Won't work because of Employee table reference to vehicle as foreign key relationship
+        Vehicle vehicle = em.find(Vehicle.class, id);
+        em.remove(vehicle);
     }
 
     @Override

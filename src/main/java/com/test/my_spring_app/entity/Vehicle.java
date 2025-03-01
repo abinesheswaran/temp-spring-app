@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,18 +22,17 @@ public class Vehicle {
     private int year;
     @Column(name = "color")
     private String color;
-    @Column(name = "employee_id")
-    private int employeeId;
+    @OneToOne(mappedBy = "vehicle")
+    private Employee employee;
 
     public Vehicle() {
     }
 
-    public Vehicle(String make, String model, int year, String color, int employeeId) {
+    public Vehicle(String make, String model, int year, String color) {
         this.make = make;
         this.model = model;
         this.year = year;
         this.color = color;
-        this.employeeId = employeeId;
     }
 
     public int getId() {
@@ -73,14 +73,6 @@ public class Vehicle {
 
     public void setColor(String color) {
         this.color = color;
-    }
-
-    public int getEmployeeId() {
-        return employeeId;
-    }
-
-    public void setEmployeeId(int employeeId) {
-        this.employeeId = employeeId;
     }
 
 }
