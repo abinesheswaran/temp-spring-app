@@ -1,11 +1,15 @@
 package com.test.my_spring_app.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
+import java.util.List;
 
 @Entity
 @Table(name="team")
@@ -19,11 +23,16 @@ public class Team {
     private String projectName;
     @Column(name="director_id")
     private int directorId;
+    //@OneToMany(cascade = CascadeType.ALL, mappedBy = "team", orphanRemoval = true)
+    @OneToMany(mappedBy = "team", orphanRemoval = false)
+    @JsonBackReference
+    private List<Employee> employees;
 
     public Team() {
     }
 
-    public Team(int directorId, String projectName, String name) {
+    public Team(List<Employee> employees, int directorId, String projectName, String name) {
+        this.employees = employees;
         this.directorId = directorId;
         this.projectName = projectName;
         this.name = name;
@@ -59,5 +68,13 @@ public class Team {
 
     public void setDirectorId(int directorId) {
         this.directorId = directorId;
+    }
+
+    public List<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
     }
 }

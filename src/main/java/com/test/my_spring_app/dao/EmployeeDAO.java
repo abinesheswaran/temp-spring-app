@@ -9,7 +9,7 @@ public interface EmployeeDAO {
 
     public Employee getById(int id);
 
-    public void add(Employee employee);
+    public void add(Employee employee, int teamId);
 
     public void update(Employee employee, int id);
 

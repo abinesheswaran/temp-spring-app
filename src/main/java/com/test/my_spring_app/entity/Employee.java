@@ -1,5 +1,6 @@
 package com.test.my_spring_app.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -7,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -25,21 +27,23 @@ public class Employee {
     private double salary;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "vehicle_id", referencedColumnName = "id")
+    @JsonIgnoreProperties("employee")
     private Vehicle vehicle;
-    @Column(name="team_id")
-    private int teamId;
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "team_id", referencedColumnName = "id")
+//    @JsonManagedReference
+    private Team team;
     @Column(name="role_id")
     private int roleId;
 
     public Employee() {
     }
 
-    public Employee(String name, int age, double salary, Vehicle vehicle, int teamId, int roleId) {
+    public Employee(String name, int age, double salary, Vehicle vehicle, int roleId) {
         this.name = name;
         this.age = age;
         this.salary = salary;
         this.vehicle = vehicle;
-        this.teamId = teamId;
         this.roleId = roleId;
     }
 
@@ -83,19 +87,19 @@ public class Employee {
         this.vehicle = vehicle;
     }
 
-    public int getTeamId() {
-        return teamId;
-    }
-
-    public void setTeamId(int teamId) {
-        this.teamId = teamId;
-    }
-
     public int getRoleId() {
         return roleId;
     }
 
     public void setRoleId(int roleId) {
         this.roleId = roleId;
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
     }
 }

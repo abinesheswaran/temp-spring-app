@@ -1,6 +1,7 @@
 package com.test.my_spring_app.dao;
 
 import com.test.my_spring_app.entity.Employee;
+import com.test.my_spring_app.entity.Team;
 import com.test.my_spring_app.entity.Vehicle;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -30,7 +31,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
     @Override
     @Transactional
-    public void add(Employee employee) {
+    public void add(Employee employee, int teamId) {
+        Team team = em.find(Team.class, teamId);
+        employee.setTeam(team);
         em.persist(employee);
     }
 
@@ -43,7 +46,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         theEmployee.setSalary(employee.getSalary());
         theEmployee.setAge(employee.getAge());
         theEmployee.setRoleId(employee.getRoleId());
-        theEmployee.setTeamId(employee.getTeamId());
         theVehicle.setMake(employee.getVehicle().getMake());
         theVehicle.setModel(employee.getVehicle().getModel());
         theVehicle.setYear(employee.getVehicle().getYear());

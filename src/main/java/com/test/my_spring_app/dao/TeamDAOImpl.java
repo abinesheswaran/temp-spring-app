@@ -30,6 +30,7 @@ public class TeamDAOImpl implements TeamDAO {
         theTeam.setName(team.getName());
         theTeam.setDirectorId(team.getDirectorId());
         theTeam.setProjectName(team.getProjectName());
+        theTeam.setEmployees(team.getEmployees());
         em.merge(theTeam);
     }
 

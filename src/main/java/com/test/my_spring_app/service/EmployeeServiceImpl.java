@@ -26,8 +26,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void add(Employee employee) {
-        employeeDAO.add(employee);
+    public void add(Employee employee,int teamId) {
+        employeeDAO.add(employee,teamId);
     }
 
     @Override

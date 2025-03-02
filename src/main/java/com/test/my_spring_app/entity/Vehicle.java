@@ -1,5 +1,7 @@
 package com.test.my_spring_app.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,7 +24,8 @@ public class Vehicle {
     private int year;
     @Column(name = "color")
     private String color;
-    @OneToOne(mappedBy = "vehicle")
+    @OneToOne(mappedBy = "vehicle",cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("vehicle")
     private Employee employee;
 
     public Vehicle() {
@@ -75,4 +78,11 @@ public class Vehicle {
         this.color = color;
     }
 
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
 }
