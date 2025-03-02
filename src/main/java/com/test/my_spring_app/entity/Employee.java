@@ -8,10 +8,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "employee")
@@ -33,18 +36,18 @@ public class Employee {
     @JoinColumn(name = "team_id", referencedColumnName = "id")
 //    @JsonManagedReference
     private Team team;
-    @Column(name="role_id")
-    private int roleId;
+    @ManyToMany(mappedBy = "employees")
+    @JsonIgnoreProperties("employees")
+    private Set<Role> roles = new HashSet<>();
 
     public Employee() {
     }
 
-    public Employee(String name, int age, double salary, Vehicle vehicle, int roleId) {
+    public Employee(String name, int age, double salary, Vehicle vehicle) {
         this.name = name;
         this.age = age;
         this.salary = salary;
         this.vehicle = vehicle;
-        this.roleId = roleId;
     }
 
     public int getId() {
@@ -87,12 +90,12 @@ public class Employee {
         this.vehicle = vehicle;
     }
 
-    public int getRoleId() {
-        return roleId;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setRoleId(int roleId) {
-        this.roleId = roleId;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     public Team getTeam() {

@@ -45,7 +45,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
         theEmployee.setName(employee.getName());
         theEmployee.setSalary(employee.getSalary());
         theEmployee.setAge(employee.getAge());
-        theEmployee.setRoleId(employee.getRoleId());
         theVehicle.setMake(employee.getVehicle().getMake());
         theVehicle.setModel(employee.getVehicle().getModel());
         theVehicle.setYear(employee.getVehicle().getYear());
